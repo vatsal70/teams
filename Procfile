@@ -1,2 +1,2 @@
-web: gunicorn portfolio.wsgi --log-file - 
-worker: celery -A portfolio worker -l info -B
+web: gunicorn ems.wsgi --log-file - 
+worker: celery -A ems worker -l info -B
