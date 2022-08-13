@@ -1,0 +1,232 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <link rel="stylesheet" href="{% static 'assets/css/styles.css' %}">
+        
+        <!-- =====BOX ICONS===== -->
+        <link href='https://cdn.jsdelivr.net/npm/boxicons@2.0.5/css/boxicons.min.css' rel='stylesheet'>
+        <link rel="shortcut icon" href="{% static 'assets/img/favicon.png' %}" />
+        <title>Portfolio Website</title>
+        <style>
+        .demo{
+            margin: 10px;
+            
+        }
+
+        
+        .card-body {
+            display: flex;
+            flex-direction: column;
+        }
+
+        button.btn {
+            margin-top: auto;
+        }
+
+        .para{
+            padding-bottom:10px;
+        }
+
+        .company{
+            color: #4070F4;
+            font-style: italic;
+            font-weight: bold;
+        }
+        </style>
+    </head>
+    <body>
+        <!--===== HEADER =====-->
+        <header class="l-header">
+            <nav class="nav bd-grid">
+                <div>
+                {% if user.is_authenticated %}
+                    <a href="{% url 'admin_about' %}" class="nav__logo">Vatsal Vohera</a>
+                {% else %}
+                    <a href="{% url 'homepage' %}" class="nav__logo">Vatsal Vohera</a>
+                {% endif %}
+                </div>
+
+                <div class="nav__menu" id="nav-menu">
+                    <ul class="nav__list">
+                        <li class="nav__item"><a href ="#home" class="nav__link active">Home</a></li>
+                        <li class="nav__item"><a href="#about" class="nav__link">About</a></li>
+                        <li class="nav__item"><a href="#skills" class="nav__link">Skills</a></li>
+                        <li class="nav__item"><a href="#project" class="nav__link">Projects</a></li>
+                        <li class="nav__item"><a href="#work" class="nav__link">Work</a></li>
+                        <li class="nav__item"><a href="#contact" class="nav__link">Get in touch!</a></li>
+                        {% if user.is_authenticated %}
+                        <li class="nav__item"><a href="{% url 'logout_request' %}" class="nav__link">Logout</a></li>
+                        {% else %}
+                        <li class="nav__item"><a href="{% url 'login_page' %}" class="nav__link">Login</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+
+                <div class="nav__toggle" id="nav-toggle">
+                    <i class='bx bx-menu'></i>
+                </div>
+            </nav>
+        </header>
+
+        <main class="l-main">
+            <!--===== HOME =====-->
+            <section class="home bd-grid" id="home">
+                <div class="home__data">
+                    <h1 class="home__title">Hi,<br>I am <span class="home__title-color">Vatsal Vohera</span></h1>
+                </div>
+
+                <div class="home__social">
+                {% for item in link %}
+                    <a href="{{item.link_url}}" target=_blank value="{{item.link_name}}"class="home__social-icon"><i id = 'socialIconDynamic' class='bx'></i></a>
+                {% endfor %}
+                </div>
+
+                <div class="home__img">    
+                    <img src="{% static 'assets/img/dem.png' %}" alt="">
+                </div>
+            </section>
+
+            <!--===== ABOUT =====-->
+            <section class="about section " id="about">
+                <h2 class="section-title">About</h2>
+                <div class="about__container bd-grid">
+                    <div class="about__img">
+                    
+                        <img src="{{about.img.url}}" alt="">
+                    </div>
+                    
+                    <div>
+                        <h2 class="about__subtitle">I am Vatsal Vohera</h2>
+                        <p class="about__text">{{about.about_text}}</p>           
+                    </div>                                   
+                </div>
+            </section>
+
+            <!--===== SKILLS =====-->
+            <section class="skills section" id="skills">
+                <h2 class="section-title">Skills</h2>
+
+                <div class="skills__container bd-grid">
+                    {% for skill in skills %}
+                        <div class="skills__data">
+                            <div class="skills__names">
+                                <span class="skills__name">{{skill.skill_name}}</span>
+                            </div>
+                            <!--                        
+                            <div class="skills__bar skills__html" id="bar" style="width: 100%;">
+                                <span class="skills__b"></span>
+                            </div>
+                            <div class="skills__per">
+                                <span class="skills__percentage">{{skill.skill_percentage}}%</span>
+                            </div> 
+                            -->
+                        </div>
+                    {% endfor %}
+                </div>
+            </section>
+
+            <!--===== PROJECT =====-->
+            <section class="project section" id="project">
+                <h2 class="section-title">Projects</h2>
+
+                <div class="project__container bd-grid">
+                    {% for item in project %}
+                    <div class="work__img">
+                        <div class="card product-wrapper d-flex flex-column" style="width: 18rem;">
+                            <div class="card-body demo">
+                                <h5 class="card-title">{{item.project_name}}</h5>
+                                <p class="card-text">{{item.project_details}}<a target="_blank" style = "text-decoration:none;"href="{{item.project_link}}" class="btn btn-primary linkid"> Go to</a></p>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </section>
+            <!--===== WORK =====-->
+            <section class="work section" id="work">
+                <h2 class="section-title">Work</h2>
+
+                <div class="work__container bd-grid">
+                    {% for item in experience %}
+                    <div class="work__img">
+                            <div class="card-body demo">
+                                <h2 class="card-title">{{item.experience_type}}</h2>
+                                <br>
+                                <p class="card-text para company">{{item.experience_company}}</p>
+                                <p class="card-text para">{{item.experience_duration}}</p>
+                                <p class="card-text para">{{item.experience_details|safe}}</p>
+                            </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </section>
+            <!--===== CONTACT =====-->
+            
+            <section class="contact section" id="contact">
+            
+                <h2 class="section-title">Get in touch!</h2>
+                <div class="contact__container bd-grid">
+                    <form method="POST" action="{% url 'admin_contact_message' %}" class="contact__form">
+                        {% csrf_token %}
+                        <input type="text" placeholder="Name" class="contact__input" id="contact_name" name='contact_name'>
+                        <input type="mail" placeholder="Email" class="contact__input" id="contact_email" name='contact_email'>
+                        <textarea  cols="0" rows="10" class="contact__input" id="contact_description" name='contact_description'></textarea>
+                        <input type="submit" value="Submit" class="contact__button button">
+                    </form>
+                </div>
+            </section>
+        </main>
+
+        <!--===== FOOTER =====-->
+        <footer class="footer">
+            <p class="footer__title">Vatsal Vohera</p>
+            <div class="footer__social">
+                {% comment %} <a href="#" class="footer__icon"><i class='bx bxl-facebook' ></i></a> {% endcomment %}
+                {% for item in link %}
+                    <a href="{{item.link_url}}" value="{{item.link_name}}" target=_blank class="footer__icon"><i class='bx'></i></a>
+                {% endfor %}
+            </div>
+            <p>Copyright &#169; <script>document.write(new Date().getFullYear())</script> All rights reserved.</p>
+        </footer>
+       <script>
+        //skills__data = document.getElementsByClassName('skills__data');
+        //for (let i = 0; i < skills__data.length; i++) {
+                //console.log(skills__data[i].children[0].innerText);
+          //      percentage = skills__data[i].children[2].innerText;
+                //console.log(percentage)
+            //    skills__data[i].children[1].style.width = percentage;
+           //}
+        home__social = document.getElementsByClassName('home__social')
+        //console.log(home__social[0].children[0].children[0].className)
+        //console.log(home__data)
+        pre_class = 'bxl-'
+        for (let j = 0; j < home__social[0].children.length; j++){
+            console.log(home__social[0].children[j].children[0])
+            link_class = home__social[0].children[j].children[0]
+            let link_name = home__social[0].children[j].getAttribute("value")
+            link_class.classList.add(pre_class + link_name)
+            console.log(home__social[0].children[j].children[0].className)
+        }
+
+        footer__social = document.getElementsByClassName('footer__social')
+        for (let k = 0; k < footer__social[0].children.length; k++){
+            
+            link_class_footer = footer__social[0].children[k].children[0]
+            let link_name_footer = footer__social[0].children[k].getAttribute("value")
+            link_class_footer.classList.add(pre_class + link_name_footer)
+        }
+        {% comment %} console.log(document.getElementById('socialIconDynamic')) {% endcomment %}
+       </script>
+
+
+        <!--===== SCROLL REVEAL =====-->
+        <script src="https://unpkg.com/scrollreveal"></script>
+
+        <!--===== MAIN JS =====-->
+        <script src="{% static 'assets/js/main.js' %}"></script>
+    </body>
+</html>

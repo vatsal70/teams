@@ -1,0 +1,16 @@
+{% autoescape off %}
+Dear {{contact_email_get}},
+
+Thank you for contacting me.
+
+In response to your query:
+{{contact_description_get}}
+
+
+Our message:
+{{contact_reply_get}}
+
+Sincerely,
+Vatsal Vohera
+
+{% endautoescape %}
